@@ -18,6 +18,7 @@ func scrapeIndeedSearch(searchURL string) {
 
 	// Add a limiter to spread requests out as to not overload the server
 	c.Limit(&colly.LimitRule{
+		DomainGlob:  "*indeed.com*",
 		Delay:       2 * time.Second,
 		RandomDelay: 1 * time.Second,
 	})
