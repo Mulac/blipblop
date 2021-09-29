@@ -9,7 +9,7 @@ import (
 	"github.com/gocolly/colly/v2"
 )
 
-func scrapeIndeedSearch(searchURL string) {
+func scrapeIndeedSearchWithColly(searchURL string) {
 	// Instantiate default collector
 	c := colly.NewCollector(
 		colly.UserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0"),
@@ -63,6 +63,6 @@ func main() {
 		ScrapeIndeedSearchWithApifyAPI("", "GB", "Leeds", 10)
 	default:
 		// Scrape with Colly
-		scrapeIndeedSearch("https://uk.indeed.com/jobs?l=Leeds,+West+Yorkshire")
+		scrapeIndeedSearchWithColly("https://uk.indeed.com/jobs?l=Leeds,+West+Yorkshire")
 	}
 }
