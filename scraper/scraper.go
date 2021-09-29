@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -47,5 +49,20 @@ func scrapeIndeedSearch(searchURL string) {
 
 func main() {
 	fmt.Println("Scraping Jobs in Leeds...")
-	scrapeIndeedSearch("https://uk.indeed.com/jobs?l=Leeds,+West+Yorkshire")
+
+	// Use pick
+	scraper := "colly"
+	if len(os.Args) > 1 {
+		scraper = strings.ToLower(os.Args[1])
+	}
+
+	// Choose scraper
+	switch scraper {
+	case "apify":
+		// Scrape with Apify
+		ScrapeIndeedSearchWithApifyAPI("", "GB", "Leeds", 10)
+	default:
+		// Scrape with Colly
+		scrapeIndeedSearch("https://uk.indeed.com/jobs?l=Leeds,+West+Yorkshire")
+	}
 }
