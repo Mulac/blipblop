@@ -10,7 +10,7 @@ func main() {
 
 	// The first place to look is in scraper/interface.go as this defines how we will
 	// interact with the scraper
-	scraper.Singleton().Scrape(scraper.ScrapeRequest{
+	scraper.Singleton().Scrape(scraper.Request{
 		Country:  "GB",
 		Location: "Leeds",
 		MaxItems: 10,

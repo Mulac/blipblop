@@ -2,7 +2,7 @@ package scraper
 
 // This ScrapeRequest is likely to change in the future but for now we can overfit it
 // to querying indeed.
-type ScrapeRequest struct {
+type Request struct {
 	Query    string
 	Country  string
 	Location string
@@ -19,7 +19,7 @@ type ScrapeRequest struct {
 // external dependancies.  Other implementations may use someone elses API like apify or
 // scraper.io
 type Scraper interface {
-	Scrape(ScrapeRequest)
+	Scrape(Request)
 }
 
 type ScraperType string

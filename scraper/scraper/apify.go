@@ -17,7 +17,7 @@ type apifyScraper struct {
 	url string
 }
 
-func (s apifyScraper) Scrape(req ScrapeRequest) {
+func (s apifyScraper) Scrape(req Request) {
 	start := time.Now()
 
 	// Map to interface to allow us to store multiple different types

@@ -14,7 +14,7 @@ type naiveScraper struct {
 	url string
 }
 
-func (s *naiveScraper) Scrape(req ScrapeRequest) {
+func (s *naiveScraper) Scrape(req Request) {
 	// Find each job result link
 	s.OnHTML(`.result`, func(e *colly.HTMLElement) {
 		s.Visit(e.Request.AbsoluteURL(e.Attr("href")))
