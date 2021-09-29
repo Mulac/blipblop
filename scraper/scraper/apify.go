@@ -1,4 +1,4 @@
-package main
+package scraper
 
 import (
 	"bytes"
@@ -13,10 +13,12 @@ import (
 // @Sam Barnes's Apify API KEY
 const API_KEY = "apify_api_P7Tb03JwTcEck64l8f6LkmtyYjPD2S3qWaH6"
 
-func ScrapeIndeedSearchWithApifyAPI(searchTerm string, country string, location string, maxItems int) {
-	start := time.Now()
+type apifyScraper struct {
+	url string
+}
 
-	url := "https://api.apify.com/v2/acts/hynekhruska~indeed-scraper/run-sync-get-dataset-items?token=" + API_KEY
+func (s apifyScraper) Scrape(req ScrapeRequest) {
+	start := time.Now()
 
 	// Map to interface to allow us to store multiple different types
 	type Map map[string]interface{}
@@ -29,10 +31,10 @@ func ScrapeIndeedSearchWithApifyAPI(searchTerm string, country string, location 
 
 	// Data in json format to be sent in POST request
 	postbody, _ := json.Marshal(Map{
-		"position":             searchTerm,
-		"country":              country,
-		"location":             location,
-		"maxItems":             maxItems,
+		"position":             req.Query,
+		"country":              req.Country,
+		"location":             req.Location,
+		"maxItems":             req.MaxItems,
 		"maxConcurrency":       10,
 		"extendOutputFunction": extendOutput,
 		"proxyConfiguration":   proxyConfig})
@@ -40,7 +42,7 @@ func ScrapeIndeedSearchWithApifyAPI(searchTerm string, country string, location 
 	responseBody := bytes.NewBuffer(postbody)
 
 	// Post with the responseBody, settings the content type to accept json
-	resp, err := http.Post(url, "application/json", responseBody)
+	resp, err := http.Post(s.url, "application/json", responseBody)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -61,4 +63,10 @@ func ScrapeIndeedSearchWithApifyAPI(searchTerm string, country string, location 
 	// Calculate length of execution (for viability)
 	duration := time.Since(start)
 	fmt.Printf("Elapsed time: %s\n", duration)
+}
+
+func newApiyScraper() *apifyScraper {
+	return &apifyScraper{
+		url: "https://api.apify.com/v2/acts/hynekhruska~indeed-scraper/run-sync-get-dataset-items?token=" + API_KEY,
+	}
 }
