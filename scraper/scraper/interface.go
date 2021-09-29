@@ -1,6 +1,6 @@
 package scraper
 
-// This Request is likely to change in the future but for now we can overfit it
+// Request is likely to change in the future but for now we can overfit it
 // to querying indeed.
 type Request struct {
 	Query    string
