@@ -19,6 +19,7 @@ type Request struct {
 // external dependancies.  Other implementations may use someone elses API like apify or
 // scraper.io
 type Scraper interface {
+	// Scrape blocks until the request is complete
 	Scrape(Request)
 }
 

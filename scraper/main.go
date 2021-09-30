@@ -12,6 +12,6 @@ func main() {
 	scraper.Singleton().Scrape(scraper.Request{
 		Country:  "GB",
 		Location: "Leeds",
-		MaxItems: 10,
+		MaxItems: 1,
 	})
 }
