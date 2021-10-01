@@ -87,7 +87,7 @@ func (s apifyScraper) runDeamon() {
 	}
 }
 
-func newApiyScraper() *apifyScraper {
+func newApifyScraper() *apifyScraper {
 	scraper := &apifyScraper{
 		apifyUrl:    "https://api.apify.com/v2/acts/hynekhruska~indeed-scraper/run-sync-get-dataset-items?token=" + API_KEY,
 		scrapeQueue: make(chan Request, 10000),

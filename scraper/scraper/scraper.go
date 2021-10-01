@@ -41,7 +41,7 @@ func (sf *scraperFactory) New() (Scraper, error) {
 		return newNaiveScraper(), nil
 
 	case SCRAPER_APIFY:
-		return newApiyScraper(), nil
+		return newApifyScraper(), nil
 
 	default:
 		return nil, fmt.Errorf("ERROR|scraperFactory|ScraperType %s not recognised", sf.stype)
