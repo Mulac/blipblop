@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"runtime"
 	"time"
 )
 
@@ -14,7 +15,8 @@ import (
 const API_KEY = "apify_api_P7Tb03JwTcEck64l8f6LkmtyYjPD2S3qWaH6"
 
 type apifyScraper struct {
-	url string
+	apifyUrl    string
+	scrapeQueue chan Request
 }
 
 func (s apifyScraper) Scrape(req Request) {
@@ -42,7 +44,7 @@ func (s apifyScraper) Scrape(req Request) {
 	responseBody := bytes.NewBuffer(postbody)
 
 	// Post with the responseBody, settings the content type to accept json
-	resp, err := http.Post(s.url, "application/json", responseBody)
+	resp, err := http.Post(s.apifyUrl, "application/json", responseBody)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -65,8 +67,32 @@ func (s apifyScraper) Scrape(req Request) {
 	fmt.Printf("Elapsed time: %s\n", duration)
 }
 
-func newApiyScraper() *apifyScraper {
-	return &apifyScraper{
-		url: "https://api.apify.com/v2/acts/hynekhruska~indeed-scraper/run-sync-get-dataset-items?token=" + API_KEY,
+func (s apifyScraper) GoScrape(req Request) {
+	s.scrapeQueue <- req
+}
+
+// scrape is a super dumb worker that picks up requests from the queue and Scrapes them
+func (s apifyScraper) scrape() {
+	for {
+		req := <-s.scrapeQueue
+		s.Scrape(req)
 	}
+}
+
+func (s apifyScraper) runDeamon() {
+	// TODO(calum): let the number of workers be set via config
+	for i := 0; i < runtime.NumCPU(); i++ {
+		// TODO(calum): give each worker a different API key
+		go s.scrape()
+	}
+}
+
+func newApiyScraper() *apifyScraper {
+	scraper := &apifyScraper{
+		apifyUrl:    "https://api.apify.com/v2/acts/hynekhruska~indeed-scraper/run-sync-get-dataset-items?token=" + API_KEY,
+		scrapeQueue: make(chan Request, 10000),
+	}
+
+	scraper.runDeamon()
+	return scraper
 }

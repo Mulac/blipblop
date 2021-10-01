@@ -19,7 +19,10 @@ type Request struct {
 // external dependancies.  Other implementations may use someone elses API like apify or
 // scraper.io
 type Scraper interface {
+	// Scrape blocks until scraping is complete
 	Scrape(Request)
+	// GoScrape adds the request to be scraped and executes asyncronously
+	GoScrape(Request)
 }
 
 type ScraperType string
