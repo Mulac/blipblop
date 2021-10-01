@@ -15,7 +15,7 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
 
     return (
         <Animated.View style={[styles.container, isFirst && animatedCardSwipe]} {...rest}>
-            <Text style={styles.positionName}>Job Title: {job.position}</Text>
+            <Text style={styles.positionName}>Job Title: {job.positionName}</Text>
             {/* <Text>some more stuff to go here...</Text> */}
             {isFirst}
         </Animated.View>
