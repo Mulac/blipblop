@@ -1,11 +1,11 @@
-package db
+package storage
 
 import "gorm.io/gorm"
 
 // Job is, for now, an indeedJob
-type Job indeedJob
+type Job IndeedJob
 
-type indeedJob struct {
+type IndeedJob struct {
 	gorm.Model
 	Title        string `gorm:"not null"`
 	Metadata     string `gorm:"not null"`
@@ -19,7 +19,7 @@ type indeedJob struct {
 }
 
 type JobDatabase interface {
-	GetJob(uint) (Job, error)
+	GetJobs() ([]Job, error)
 	AddJob(Job) error
 }
 
