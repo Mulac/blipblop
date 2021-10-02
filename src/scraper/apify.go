@@ -1,6 +1,7 @@
 package scraper
 
 import (
+	"blipblop/src/storage"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -25,8 +26,10 @@ func (s apifyScraper) Scrape(req Request) {
 	// Map to interface to allow us to store multiple different types
 	type Map map[string]interface{}
 
+	// Salary and Contract type
+	//jobsearch-JobMetadataHeader-item
 	// Use this to extend the output of the scraper and grab other data, modify existing data etc.
-	extendOutput := "($) => {return {\"companyImage\": $('.jobsearch-CompanyAvatar-image').attr('src')}}"
+	extendOutput := "($) => {return {\"companyImage\": $('.jobsearch-CompanyAvatar-image').attr('src'), \"metadata\": $('.jobsearch-JobMetadataHeader-item > span').text()}}"
 
 	// Use Apify proxy settings (current) or we can use our own proxy here
 	proxyConfig := Map{"useApifyProxy": true}
@@ -62,6 +65,21 @@ func (s apifyScraper) Scrape(req Request) {
 	sb := string(body)
 	fmt.Println(sb)
 
+	var response []map[string]interface{}
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		fmt.Printf("ERROR|failed to unmarshal indeed response to map[string]interface{}|%v", err)
+		return
+	}
+
+	for _, jobResponse := range response {
+		var job storage.Job
+		err = job.FromIndeedResponse(jobResponse)
+		if err != nil {
+			fmt.Printf("ERROR|failed to turn indeed response into job struct|%v", err)
+		}
+		storage.DB().AddJob(job)
+	}
 	// Calculate length of execution (for viability)
 	duration := time.Since(start)
 	fmt.Printf("Elapsed time: %s\n", duration)
@@ -87,7 +105,7 @@ func (s apifyScraper) runDeamon() {
 	}
 }
 
-func newApiyScraper() *apifyScraper {
+func newApifyScraper() *apifyScraper {
 	scraper := &apifyScraper{
 		apifyUrl:    "https://api.apify.com/v2/acts/hynekhruska~indeed-scraper/run-sync-get-dataset-items?token=" + API_KEY,
 		scrapeQueue: make(chan Request, 10000),

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"blipblop/src/scraper"
 	"fmt"
-	"scraper/scraper"
 )
 
 func main() {
@@ -12,6 +12,6 @@ func main() {
 	scraper.Singleton().Scrape(scraper.Request{
 		Country:  "GB",
 		Location: "Leeds",
-		MaxItems: 1,
+		MaxItems: 10,
 	})
 }
