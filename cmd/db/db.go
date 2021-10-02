@@ -7,7 +7,7 @@ import (
 
 func main() {
 	db := db.NewJobDatabase()
-	job, err := db.GetJob(1)
+	job, err := db.GetJobs()
 	if err != nil {
 		panic(err)
 	}

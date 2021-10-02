@@ -1,4 +1,4 @@
-package db
+package storage
 
 import (
 	"fmt"
@@ -11,14 +11,14 @@ type jobDatabaseImpl struct {
 	*gorm.DB
 }
 
-func (db jobDatabaseImpl) GetJob(id uint) (Job, error) {
-	job := &Job{}
-	result := db.First(job, "id = ?", id)
+func (db jobDatabaseImpl) GetJobs() ([]Job, error) {
+	jobs := []Job{}
+	result := db.Find(&jobs)
 	if result.Error != nil {
-		return Job{}, fmt.Errorf("ERROR|jobDatabaseImpl.GetJob(%d)|%v", id, result.Error)
+		return []Job{}, fmt.Errorf("ERROR|jobDatabaseImpl.GetJobs()|%v", result.Error)
 	}
 
-	return *job, nil
+	return jobs, nil
 }
 
 func (db jobDatabaseImpl) AddJob(job Job) error {
