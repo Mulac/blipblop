@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Animated } from "react-native";
+import { View, Text, Animated, Image } from "react-native";
 import { styles } from "./styles";
 
 export default function Card({ job, isFirst, swipe, ...rest }) {
@@ -14,10 +14,19 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
     };
 
     return (
-        <Animated.View style={[styles.container, isFirst && animatedCardSwipe]} {...rest}>
-            <Text style={styles.positionName}>Job Title: {job.positionName}</Text>
-            {/* <Text>some more stuff to go here...</Text> */}
-            {isFirst}
+        <Animated.View style={[styles.container, isFirst && animatedCardSwipe, isFirst && styles.containerFirst]} {...rest}>
+            <View style={styles.companyDetails}>
+                <View>
+                    <Image
+                        style={styles.companyImage}
+                        source={
+                            {uri: job.companyImage}
+                        }
+                    />
+                </View>
+
+                <Text style={styles.positionName}>{job.positionName}</Text>
+            </View>
         </Animated.View>
     );
 }

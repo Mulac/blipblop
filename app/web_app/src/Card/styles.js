@@ -13,27 +13,38 @@ export const styles = StyleSheet.create({
         borderRightWidth: 1,
         borderColor: 'grey',
 
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        position: 'absolute',
+        flex: 1,
+        bottom: 0
+    },
+    containerFirst: {
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
         elevation: 5,
-
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        position: 'absolute',
+    },
+    companyDetails: {
         flex: 1,
-        alignItems: 'center',
-        bottom: 0
+        marginHorizontal: 20,
+        top: 20,
     },
     positionName: {
-        top: 50,
-        paddingHorizontal: 20,
+        flex: 1,
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black'
+    },
+    companyImage: {
+        width: 70,
+        height: 50,
+
+        // TODO(sam): Need to find a way to stop this flickering on re-rending
+        resizeMode: 'contain'
     }
 });

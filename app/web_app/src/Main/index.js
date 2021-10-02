@@ -9,6 +9,8 @@ export default function Main() {
     const [jobs, setJobs] = useState(jobsArray)
     const swipe = useRef(new Animated.ValueXY()).current;
 
+    // We change the DOM which counts as a side effect,
+    // so this hook is ran every time we swipe
     useEffect(() => {
         if (jobs.length <= 1) {
             setJobs(jobs.concat(jobsArray));
