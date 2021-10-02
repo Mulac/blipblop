@@ -64,6 +64,8 @@ export default function Main() {
         <View style={styles.container}>
             {jobs.map((jobObj, i) => {
                 const isFirst = i === 0;
+
+                // We only want to handle draggin on the first card
                 const dragHandlers = isFirst ? panResponder.panHandlers : {};
 
                 return (
