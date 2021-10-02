@@ -1,7 +1,7 @@
 package main
 
 import (
-	handlers "backend/src/handlers"
+	"blipblop/src/backend/handlers"
 
 	"github.com/gin-gonic/gin"
 )

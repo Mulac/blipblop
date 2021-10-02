@@ -10,7 +10,7 @@ If you haven't used Go before, welcome to the simple life...
 
 ## Go Modules
 
-This is a monorepo - all root folders are seperate modules.  The **core** module is where all the 'core' Go data is stored, this should not depend on any other module.  Go modules allow us to separate dependancies between projects.  The go.mod file lists the dependancies, go automatically manages these as you import them, downloading and installing them whenever you compile or run your code.
+This is a monorepo.  The **core** module is where all the 'core' Go data is stored, this should not depend on any other package.  **app** stores our frontends.
 
 ## Contributing
 Make your change in a feature branch i.e. `scraper/feature/apify-concurrent`

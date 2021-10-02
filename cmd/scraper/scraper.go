@@ -1,8 +1,8 @@
 package main
 
 import (
+	"blipblop/src/scraper"
 	"fmt"
-	"scraper/scraper"
 )
 
 func main() {
