@@ -22,7 +22,3 @@ type JobDatabase interface {
 	GetJobs() ([]Job, error)
 	AddJob(Job) error
 }
-
-func NewJobDatabase() JobDatabase {
-	return newJobDatabase()
-}
