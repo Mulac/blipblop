@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '90%',
-        // backgroundColor: '#FF6961',
         backgroundColor: '#fff',
         borderTopWidth: 1,
         borderLeftWidth: 1,
@@ -17,7 +16,7 @@ export const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         position: 'absolute',
         flex: 1,
-        bottom: 0
+        bottom: 0,
     },
     containerFirst: {
         shadowColor: "#000",
@@ -29,13 +28,17 @@ export const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 5,
     },
+  
     companyDetails: {
-        flex: 1,
-        marginHorizontal: 20,
-        top: 20,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },  
+    companyName: {
+        fontSize: 15,
+        fontWeight: 'bold'
     },
     positionName: {
-        flex: 1,
+        marginTop: 10,
         fontSize: 20,
         fontWeight: 'bold',
         color: 'black'
@@ -43,8 +46,24 @@ export const styles = StyleSheet.create({
     companyImage: {
         width: 70,
         height: 50,
+        marginRight: 10,
 
         // TODO(sam): Need to find a way to stop this flickering on re-rending
         resizeMode: 'contain'
-    }
+    },
+
+    locationDetails: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    locationPin: {
+        marginTop: 10,
+        marginRight: 10,
+        width: 30,
+        height: 30,
+    },
+
+    jobDetails: {
+        margin: 20
+    },
 });
