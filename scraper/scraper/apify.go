@@ -25,6 +25,8 @@ func (s apifyScraper) Scrape(req Request) {
 	// Map to interface to allow us to store multiple different types
 	type Map map[string]interface{}
 
+	// Salary and Contract type
+	//jobsearch-JobMetadataHeader-item
 	// Use this to extend the output of the scraper and grab other data, modify existing data etc.
 	extendOutput := "($) => {return {\"companyImage\": $('.jobsearch-CompanyAvatar-image').attr('src')}}"
 
