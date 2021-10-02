@@ -104,6 +104,7 @@ type DatabaseConfig struct {
 }
 
 // get a database connection string based on the database config
+// if using sqlite, DB_NAME is the path to the database file
 func (db *DatabaseConfig) GetHost() (string, error) {
 	conn := ""
 	switch db.Driver {
@@ -112,7 +113,9 @@ func (db *DatabaseConfig) GetHost() (string, error) {
 		if db.Password != "" {
 			userPart += ":" + db.Password
 		}
-		conn = fmt.Sprintf("%s(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", userPart, db.Host, db.Password, db.Name)
+		conn = fmt.Sprintf("%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local", userPart, db.Host, db.Port, db.Name)
+	case "sqlite3":
+		conn = db.Name
 	default:
 		return conn, fmt.Errorf("unknown database driver %s", db.Driver)
 	}
