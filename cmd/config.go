@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "core/config"
+	. "blipblop/core/config"
 	"fmt"
 )
 

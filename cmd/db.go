@@ -1,7 +1,7 @@
 package main
 
 import (
-	"db/db"
+	db "blipblop/db/src"
 	"fmt"
 )
 
