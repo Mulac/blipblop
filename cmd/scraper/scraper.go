@@ -1,7 +1,7 @@
 package main
 
 import (
-	scraper "blipblop/scraper/src"
+	"blipblop/src/scraper"
 	"fmt"
 )
 
