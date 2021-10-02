@@ -6,8 +6,7 @@ import (
 )
 
 func main() {
-	db := storage.NewJobDatabase()
-	job, err := db.GetJobs()
+	job, err := storage.DB().GetJobs()
 	if err != nil {
 		panic(err)
 	}
