@@ -1,9 +1,12 @@
 package storage
 
 import (
+	. "blipblop/src/core/config"
 	"fmt"
+	"log"
 
 	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -32,8 +35,22 @@ func (db jobDatabaseImpl) AddJob(job Job) error {
 
 func newJobDatabase() *jobDatabaseImpl {
 	// refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details
-	dsn := "root@tcp(127.0.0.1:3306)/prototype?charset=utf8&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dbCfg := Config().Database
+	conn, err := dbCfg.GetHost()
+	if err != nil {
+		log.Fatalf("ERROR|newJobDatabase|failed to get connection string|%v", err)
+	}
+
+	var dialect gorm.Dialector
+	switch dbCfg.Driver {
+	case "mysql":
+		dialect = mysql.Open(conn)
+	case "sqlite3":
+		dialect = sqlite.Open(conn)
+	}
+
+	// dsn := "root@tcp(127.0.0.1:3306)/prototype?charset=utf8&parseTime=True&loc=Local"
+	db, err := gorm.Open(dialect, &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
