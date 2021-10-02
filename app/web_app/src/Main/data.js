@@ -1,5 +1,5 @@
-[
-    {
+export const jobs = [
+  {
     "positionName": "Retail Assistant – #MakeItMemorable",
     "company": "John Lewis",
     "location": "Leeds LS2",
@@ -117,5 +117,5 @@
     "postedAt": "2 days ago",
     "scrapedAt": "2021-10-01T14:45:07.803Z",
     "description": "Location: Primark Leeds Trinity\nSalary: £8.51 - Under 23, £9.09 - Over 23\nEmployment type: Fixed Term for 4 weeks\nJob type: Part Time\nContracted hours: Between 8-12 hours per week\nWorking pattern: Varied shifts including mornings; afternoons; evenings and weekends – all will be discussed at interview\n\nWe’re Primark – one of the biggest names in fashion retail with over 190 stores in the UK, over 395 globally and growing. We’re all about fun, fashion, and a fabulous career.\n\nAs a Retail Assistant, whether you are on the sales floor, the cash desks or the fitting rooms, your role is to deliver exceptional service to our customers as well as maintain high standards on the shop floor.\n\nWhether you are looking for your first job or you are an experienced retailer who wants to develop their career, Primark has opportunities for you.\n\nPrimark offers an attractive pay rate, innovative training and development programmes and a fun, busy environment. Primark is just a great place to work!\n\nDo it! Apply now…\n\nWe are fully committed to supporting people with a disability in applying for our vacancies. If you have a disability and require support throughout the recruitment process you can contact us here disABILITY@primark.co.uk and let us know what adjustments you may need."
-  }
-]
+  },
+];
