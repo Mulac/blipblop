@@ -52,7 +52,7 @@ func newJobDatabase() *jobDatabaseImpl {
 	// dsn := "root@tcp(127.0.0.1:3306)/prototype?charset=utf8&parseTime=True&loc=Local"
 	db, err := gorm.Open(dialect, &gorm.Config{})
 	if err != nil {
-		panic(err)
+		log.Fatalf("ERROR|newJobDatabase|failed to open database|%v", err)
 	}
 
 	// This updates our tables to match the schema defined by the struct
