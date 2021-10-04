@@ -6,7 +6,6 @@ import api from '../utils/api';
 
 const axios = require('axios');
 
-
 export default function Main() {
     const [jobs, setJobs] = useState([]);
     const swipe = useRef(new Animated.ValueXY()).current;
@@ -14,7 +13,8 @@ export default function Main() {
     // We change the DOM which counts as a side effect,
     // so this hook is ran every time we swipe
     useEffect(() => {
-        if (jobs.length <= 1) {
+        if (jobs.length <= 1) {    
+            
             axios.get('http://178.79.148.75/jobs', {
                 auth: {
                     username: 'admin',
@@ -34,7 +34,13 @@ export default function Main() {
     }, [jobs.length]);
 
     const panResponder = PanResponder.create({
-        onMoveShouldSetPanResponder: () => true,
+        onMoveShouldSetPanResponder: (_, { dx, dy}) => {
+            const draggedLeft = dx < -15;
+            const draggedRight = dx > 15;
+
+            if (draggedLeft || draggedRight)
+                return true;
+        },
         // Move to the current x, y position of the gesture (finger on the screens location)
         onPanResponderMove: (_, { dx, dy }) => {
             swipe.setValue({ x: dx, y: 0 });
@@ -50,7 +56,7 @@ export default function Main() {
                 Animated.timing(swipe, {
                     duration: 200,
                     toValue: {
-                        x: direction * 500,
+                        x: direction * 700,
                         y: dy
                     },
                     useNativeDriver: true

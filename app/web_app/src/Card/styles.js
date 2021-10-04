@@ -6,27 +6,14 @@ export const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '90%',
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderColor: 'grey',
+        // backgroundColor: '#A7C7E7',
+        backgroundColor: "#fff",
 
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         position: 'absolute',
         flex: 1,
         bottom: 0,
-    },
-    containerFirst: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 5,
     },
   
     companyDetails: {
@@ -69,13 +56,13 @@ export const styles = StyleSheet.create({
 
     jobDescription: {
         // marginTop: '50%',
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#3d3d3d',
         paddingTop: 20,
         paddingHorizontal: 20,
     },
 
     bottomSheet: {
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#3d3d3d',
         paddingHorizontal: 20,
         paddingVertical: 20,
         borderTopLeftRadius: 20,
@@ -84,8 +71,13 @@ export const styles = StyleSheet.create({
         borderColor: 'grey'
     },
 
-    description: {
+    descriptionText: {
         fontSize: 15,
         fontWeight: 'bold',
+        color: '#fff'
+    },
+
+    jobDescriptionText: {
+        color: "#fff"
     }
 });

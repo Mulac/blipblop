@@ -17,7 +17,7 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
     const snapPoints = useMemo(() => ['30%', '60%'], []);
 
     return (
-        <Animated.View style={[styles.container, isFirst && animatedCardSwipe, isFirst && styles.containerFirst]} {...rest}>
+        <Animated.View style={[styles.container, isFirst && animatedCardSwipe]} {...rest}>
             <View style={styles.jobDetails}>
                 <View style={styles.companyDetails}>
                     { job.CompanyImage !== "" && 
@@ -44,13 +44,14 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
             <BottomSheet
                 index={0}
                 snapPoints={snapPoints}
+                style={styles.swipeUp}
             >
                 
                 <View style={styles.bottomSheet}>
                     <Text style={styles.descriptionText}>Description</Text>
                 </View>
                 <BottomSheetScrollView showsHorizontalScrollIndicator={false} style={styles.jobDescription}>         
-                    <Text>{job.Description}</Text>
+                    <Text style={styles.jobDescriptionText}>{job.Description}</Text>
                 </BottomSheetScrollView>
             </BottomSheet>
         </Animated.View>
