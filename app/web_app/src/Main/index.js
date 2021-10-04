@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Animated, PanResponder } from 'react-native';
 import Card from '../Card';
 import { styles } from './styles';
+import { CARD } from '../utils/constants';
 import api from '../utils/api';
 
 const axios = require('axios');
@@ -34,12 +35,11 @@ export default function Main() {
     }, [jobs.length]);
 
     const panResponder = PanResponder.create({
-        onMoveShouldSetPanResponder: (_, { dx, dy}) => {
-            const draggedLeft = dx < -15;
-            const draggedRight = dx > 15;
+        onMoveShouldSetPanResponder: (_, { moveX, moveY, dx, dy}) => {
+            const draggedLeft = dx < -CARD.dragBuffer;
+            const draggedRight = dx > CARD.dragBuffer;
 
-            if (draggedLeft || draggedRight)
-                return true;
+            return draggedLeft || draggedRight ? true : false;
         },
         // Move to the current x, y position of the gesture (finger on the screens location)
         onPanResponderMove: (_, { dx, dy }) => {
@@ -50,13 +50,13 @@ export default function Main() {
 
             // remove the card
             const direction = Math.sign(dx);
-            const isActionActive = Math.abs(dx) > 100;
+            const isActionActive = Math.abs(dx) > CARD.actionOffset;
             
             if (isActionActive) {
                 Animated.timing(swipe, {
-                    duration: 200,
+                    duration: CARD.outOfScreenDuration,
                     toValue: {
-                        x: direction * 700,
+                        x: direction * CARD.outOfScreen,
                         y: dy
                     },
                     useNativeDriver: true
@@ -71,7 +71,7 @@ export default function Main() {
                     },
                     useNativeDriver: true,
                     // Limiter for the speed we want to the card to bounce back to the start
-                    friction: 7, 
+                    friction: CARD.friction, 
                 }).start();
             }
         }

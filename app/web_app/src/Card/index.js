@@ -14,7 +14,8 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
         transform: [...swipe.getTranslateTransform(), {rotate}]
     };
     
-    const snapPoints = useMemo(() => ['30%', '60%'], []);
+    const snapPoints = useMemo(() => ['30%', '90%'], []);
+
 
     return (
         <Animated.View style={[styles.container, isFirst && animatedCardSwipe]} {...rest}>
@@ -44,7 +45,7 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
             <BottomSheet
                 index={0}
                 snapPoints={snapPoints}
-                style={styles.swipeUp}
+                enableOverDrag={false}
             >
                 
                 <View style={styles.bottomSheet}>
