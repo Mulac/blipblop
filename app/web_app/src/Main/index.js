@@ -5,8 +5,6 @@ import { styles } from './styles';
 import { CARD } from '../utils/constants';
 import api from '../utils/api';
 
-const axios = require('axios');
-
 export default function Main() {
     const [jobs, setJobs] = useState([]);
     const swipe = useRef(new Animated.ValueXY()).current;
@@ -15,13 +13,7 @@ export default function Main() {
     // so this hook is ran every time we swipe
     useEffect(() => {
         if (jobs.length <= 1) {    
-            
-            axios.get('http://178.79.148.75/jobs', {
-                auth: {
-                    username: 'admin',
-                    password: 'blipblop'
-                }
-            })
+            api.fetchJobs()
             .then((response) => {
                 if (response.data != undefined) {
                     setJobs(jobs.concat(response.data));

@@ -12,13 +12,10 @@ const apiInstance = axios.create({
     }
 });
 
-const api = {
-    fetchJobs: () => {
+export default api = {
+    fetchJobs: () => 
         apiInstance({
             'method': 'GET',
             'url': '/jobs',
         })
-    }
-}
-
-export default api;
+};
