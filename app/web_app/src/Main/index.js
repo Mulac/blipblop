@@ -15,9 +15,7 @@ export default function Main() {
         if (jobs.length <= 1) {    
             api.fetchJobs()
             .then((response) => {
-                if (response.data != undefined) {
-                    setJobs(jobs.concat(response.data));
-                }
+                setJobs(jobs.concat(response.data));
             })
             .catch((error) => {
                 console.log(error);
