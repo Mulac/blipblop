@@ -1,43 +1,35 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Animated, PanResponder } from 'react-native';
 import Card from '../Card';
-import { jobs as jobsArray } from './data';
 import { styles } from './styles';
+import api from '../utils/api';
 
 const axios = require('axios');
 
-function getJobs() {
-    axios.get('http://178.79.148.75/jobs', {
-        auth: {
-            username: 'admin',
-            password: 'blipblop'
-        }
-    })
-        .then(function (response) {
-            // handle success
-            console.log(response);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            console.log("is this being called>!");
-        });
-}
-
 
 export default function Main() {
-    const [jobs, setJobs] = useState(jobsArray)
+    const [jobs, setJobs] = useState([]);
     const swipe = useRef(new Animated.ValueXY()).current;
-
-    // getJobs();
 
     // We change the DOM which counts as a side effect,
     // so this hook is ran every time we swipe
     useEffect(() => {
         if (jobs.length <= 1) {
-            setJobs(jobs.concat(jobsArray));
+            axios.get('http://178.79.148.75/jobs', {
+                auth: {
+                    username: 'admin',
+                    password: 'blipblop'
+                }
+            })
+            .then((response) => {
+                if (response.data != undefined) {
+                    setJobs(jobs.concat(response.data));
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setJobs(jobs.concat([]));
+            });
         }
     }, [jobs.length]);
 
