@@ -10,6 +10,7 @@ This is quiet a length process so bare with me as I try to explain it all
 
 ## Run
 
+`npm install`
 `npm start`
 
 either scan the QR code with the expo client app you installed on your phone, or use a native emulator (such as android studio) to preview on your computer
