@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef, useMemo } from "react";
 import { View, Text, Animated, Image, ScrollView, PanResponder } from "react-native";
 import { styles } from "./styles";
-import BottomSheet from "./BottomSheet";
+import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+
 
 export default function Card({ job, isFirst, swipe, ...rest }) {
-
     const rotate = swipe.x.interpolate({
         inputRange: [-100, 0, 100],
         outputRange: ['8deg', '0deg', '-8deg'],
@@ -13,48 +13,48 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
     const animatedCardSwipe = {
         transform: [...swipe.getTranslateTransform(), {rotate}]
     };
+    
+    const snapPoints = useMemo(() => ['30%', '90%'], []);
 
-    // TODO(sam): make the pan responder for the bottom sheet pull up
-    const panResponder = PanResponder.create({
-        onMoveShouldSetPanResponder: () => true,
-
-        onPanResponderMove: (_, { dx, dy }) => {
-            console.log(dx, dy);
-        },
-
-        onPanResponderRelease: (_, { dx, dy }) => {
-            console.log(dx, dy);
-        }
-    });
 
     return (
-        <Animated.View style={[styles.container, isFirst && animatedCardSwipe, isFirst && styles.containerFirst]} {...rest}>
+        <Animated.View style={[styles.container, isFirst && animatedCardSwipe]} {...rest}>
             <View style={styles.jobDetails}>
                 <View style={styles.companyDetails}>
-                    { job.companyImage && 
+                    { job.CompanyImage !== "" && 
                         <Image style={styles.companyImage}
                             source={
-                                {uri: job.companyImage}
+                                {uri: job.CompanyImage}
                             }
                         /> 
                     }
-                    <Text style={styles.companyName}>{job.company}</Text>
+                    <Text style={styles.companyName}>{job.Company}</Text>
                 </View>
 
-                <Text style={styles.positionName}>{job.positionName}</Text>
+                <Text style={styles.positionName}>{job.Title}</Text>
                 
                 <View style={styles.locationDetails}>
-                    <Image 
+                    <Image
                         style={styles.locationPin}
                         source={require('../../assets/pin.png')} 
                     />  
-                    <Text>{job.location}</Text>
+                    <Text>{job.Location}</Text>
                 </View>
             </View>
-
+            
             <BottomSheet
-                job={job}
-            />
+                index={0}
+                snapPoints={snapPoints}
+                enableOverDrag={false}
+            >
+                
+                <View style={styles.bottomSheet}>
+                    <Text style={styles.descriptionText}>Description</Text>
+                </View>
+                <BottomSheetScrollView showsHorizontalScrollIndicator={false} style={styles.jobDescription}>         
+                    <Text style={styles.jobDescriptionText}>{job.Description}</Text>
+                </BottomSheetScrollView>
+            </BottomSheet>
         </Animated.View>
     );
 }
