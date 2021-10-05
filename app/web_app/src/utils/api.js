@@ -24,11 +24,26 @@ export default api = {
                 jobs = [];
                 data.forEach(job => {
                     jobs.push({
-                        Company: job.Company,
-                        CompanyImage: job.CompanyImage,
-                        Location: job.Location,
-                        Title: job.Title,
-                        Description: job.Description
+                        Company: job.company,
+                        CompanyImage: job.companyImage,
+                        Location: job.location,
+                        Title: job.positionName,
+                        Description: job.description,
+                        Metadata: job.metadata,
+                        Tags: [
+                            {
+                                name: 'Programming',
+                                matched: true
+                            },
+                            {
+                                name: 'Web Development',
+                                matched: true
+                            },
+                            {
+                                name: 'Cake Baking',
+                                matched: false
+                            }
+                        ]
                     });
                 });
 

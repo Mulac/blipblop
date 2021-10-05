@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 80,
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         paddingBottom: 0,
-        backgroundColor: '#f2f2f2'
+        backgroundColor: '#e8eaed'
     }
 });
