@@ -1,8 +1,6 @@
 package storage
 
 import (
-	"fmt"
-
 	"gorm.io/gorm"
 )
 
@@ -11,30 +9,18 @@ type Job IndeedJob
 
 type IndeedJob struct {
 	gorm.Model
-	Title        string `gorm:"not null"`
-	Metadata     string `gorm:"not null"`
-	Description  string `gorm:"not null"`
-	TimePosted   string `gorm:"not null"`
-	IndeedID     string
-	IndeedURL    string
-	Location     string `gorm:"not null"`
-	Company      string
-	CompanyImage string
-}
-
-func (j *Job) FromIndeedResponse(resp map[string]interface{}) error {
-	// TODO(jj) - add type check validation
-	j.Title = fmt.Sprint(resp["positionName"])
-	j.Company = fmt.Sprint(resp["company"])
-	j.Location = fmt.Sprint(resp["location"])
-	j.IndeedURL = fmt.Sprint(resp["url"])
-	j.IndeedID = fmt.Sprint(resp["id"])
-	j.Description = fmt.Sprint(resp["description"])
-	j.Metadata = fmt.Sprint(resp["metadata"])
-	return nil
+	Title        string `gorm:"not null" json:"positionName"`
+	Metadata     string `gorm:"not null" json:"metadata"`
+	Description  string `gorm:"not null" json:"description"`
+	TimePosted   string `gorm:"not null" json:"postedAt"`
+	IndeedID     string `gorm:"primaryKey" json:"id"`
+	IndeedURL    string `json:"url"`
+	Location     string `gorm:"not null" json:"location"`
+	Company      string `json:"company"`
+	CompanyImage string `json:"companyImage"`
 }
 
 type JobDatabase interface {
 	GetJobs() ([]Job, error)
-	AddJob(Job) error
+	AddJob(...Job) error
 }

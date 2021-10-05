@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"os"
 	"runtime"
 	"time"
 )
@@ -49,7 +49,8 @@ func (s apifyScraper) Scrape(req Request) {
 	// Post with the responseBody, settings the content type to accept json
 	resp, err := http.Post(s.apifyUrl, "application/json", responseBody)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Printf("ERROR|apifyScraper.Scrape(%+v)|failed to make request to apify|%v", req, err)
+		return
 	}
 
 	// Wait for response then close
@@ -58,31 +59,24 @@ func (s apifyScraper) Scrape(req Request) {
 	// Read the response
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln(err)
-	}
-
-	// Output the response
-	sb := string(body)
-	fmt.Println(sb)
-
-	var response []map[string]interface{}
-	err = json.Unmarshal(body, &response)
-	if err != nil {
-		fmt.Printf("ERROR|failed to unmarshal indeed response to map[string]interface{}|%v", err)
+		fmt.Printf("ERROR|apifyScraper.Scrape(%+v)|failed to read response from apify|%v", req, err)
 		return
 	}
 
-	for _, jobResponse := range response {
-		var job storage.Job
-		err = job.FromIndeedResponse(jobResponse)
-		if err != nil {
-			fmt.Printf("ERROR|failed to turn indeed response into job struct|%v", err)
-		}
-		storage.DB().AddJob(job)
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Println(string(body))
+		fmt.Printf("Elapsed time: %s\n", time.Since(start))
+		return
 	}
-	// Calculate length of execution (for viability)
-	duration := time.Since(start)
-	fmt.Printf("Elapsed time: %s\n", duration)
+
+	var jobs []storage.Job
+	err = json.Unmarshal(body, &jobs)
+	if err != nil {
+		fmt.Printf("ERROR|apifyScraper.Scrape(%+v)|failed to unmarshal indeed response to map[string]interface{}|%v", req, err)
+		return
+	}
+
+	storage.DB().AddJob(jobs...)
 }
 
 func (s apifyScraper) GoScrape(req Request) {
