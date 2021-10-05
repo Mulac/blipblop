@@ -25,9 +25,15 @@ func (db jobDatabaseImpl) GetJobs() ([]Job, error) {
 }
 
 func (db jobDatabaseImpl) AddJob(jobs ...Job) error {
+	fmt.Printf("DEBUG|jobDatabaseImpl.AddJob()|adding jobs: %+v", jobs)
+
 	result := db.Create(&jobs)
 	if result.Error != nil {
 		return fmt.Errorf("ERROR|jobDatabaseImpl.AddJob()|%v", result.Error)
+	}
+
+	if expected := len(jobs); result.RowsAffected != int64(expected) {
+		fmt.Printf("WARN|jobDatabaseImpl.AddJob()|expected %d to be added but only %d were", expected, result.RowsAffected)
 	}
 
 	return nil
