@@ -72,7 +72,7 @@ func (s apifyScraper) Scrape(req Request) {
 	var jobs []storage.Job
 	err = json.Unmarshal(body, &jobs)
 	if err != nil {
-		fmt.Printf("ERROR|apifyScraper.Scrape(%+v)|failed to unmarshal indeed response to map[string]interface{}|%v", req, err)
+		fmt.Printf("ERROR|apifyScraper.Scrape(%+v)|failed to unmarshal indeed response|%v", req, err)
 		return
 	}
 
