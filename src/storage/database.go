@@ -24,10 +24,10 @@ func (db jobDatabaseImpl) GetJobs() ([]Job, error) {
 	return jobs, nil
 }
 
-func (db jobDatabaseImpl) AddJob(job Job) error {
-	result := db.Create(&job)
+func (db jobDatabaseImpl) AddJob(jobs ...Job) error {
+	result := db.Create(&jobs)
 	if result.Error != nil {
-		return fmt.Errorf("ERROR|jobDatabaseImpl.AddJob(%+v)|%v", job, result.Error)
+		return fmt.Errorf("ERROR|jobDatabaseImpl.AddJob()|%v", result.Error)
 	}
 
 	return nil
