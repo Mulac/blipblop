@@ -22,13 +22,13 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:    
-      - name: multiple command
-        uses: appleboy/ssh-action@master
+    
+      - name: ssh-pipeline
+        uses: cross-the-world/ssh-pipeline@v1.2.0
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          user: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
           script: |
             cd /blipblop
             ./redeploy.sh
