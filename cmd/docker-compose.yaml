@@ -3,7 +3,9 @@ services:
   backend:
     image: blipblop/backend
     container_name: backend
-    build: backend
+    build:
+      context: ..
+      dockerfile: cmd/backend/Dockerfile
     restart: always
     ports:
       - "80:8080"
