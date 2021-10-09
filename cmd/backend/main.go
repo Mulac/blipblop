@@ -4,5 +4,5 @@ import "blipblop/src/backend"
 
 func main() {
 	r := backend.SetupRouter()
-	r.Run(":80")
+	r.Run(":8080")
 }
