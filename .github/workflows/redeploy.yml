@@ -24,11 +24,7 @@ jobs:
     steps:    
     
       - name: ssh-pipeline
-        uses: cross-the-world/ssh-pipeline@v1.2.0
-        with:
-          host: ${{ secrets.HOST }}
-          user: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            cd /blipblop
-            ./redeploy.sh
+        run: |
+          echo ${{ secrets.KEY }} > ~/.ssh/id_rsa
+          ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd /blipblop && ./redeploy.sh"
+    
