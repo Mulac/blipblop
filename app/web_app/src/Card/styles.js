@@ -22,13 +22,15 @@ export const styles = StyleSheet.create({
     },  
     companyName: {
         fontSize: 15,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: "#3d3d3d"
     },
     positionName: {
         marginTop: 10,
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'black'
+        color: 'black',
+        color: "#3d3d3d"
     },
     companyImage: {
         width: 70,
@@ -41,21 +43,31 @@ export const styles = StyleSheet.create({
 
     locationDetails: {
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20
     },
     locationPin: {
-        marginTop: 10,
         marginRight: 10,
         width: 30,
         height: 30,
     },
+
+    locationText: {
+        color: "#3d3d3d",
+    },  
+
+    metadata: {
+        marginTop: 20,
+    },
+    metadataText: {
+        color: '#2557a7'
+    },  
 
     jobDetails: {
         margin: 20
     },
 
     jobDescription: {
-        // marginTop: '50%',
         backgroundColor: '#3d3d3d',
         paddingTop: 20,
         paddingHorizontal: 20,
@@ -79,5 +91,12 @@ export const styles = StyleSheet.create({
 
     jobDescriptionText: {
         color: "#fff"
+    },
+
+
+    tagContainer: {
+        marginTop: 20,
+        flexDirection: 'row',
+        flexWrap: 'wrap'
     }
 });

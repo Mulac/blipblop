@@ -1,8 +1,8 @@
-import React, { useRef, useMemo } from "react";
-import { View, Text, Animated, Image, ScrollView, PanResponder } from "react-native";
+import React, { useMemo } from "react";
+import { View, Text, Animated, Image } from "react-native";
 import { styles } from "./styles";
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-
+import Tag from "./Tag";
 
 export default function Card({ job, isFirst, swipe, ...rest }) {
     const rotate = swipe.x.interpolate({
@@ -16,12 +16,11 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
     
     const snapPoints = useMemo(() => ['30%', '90%'], []);
 
-
     return (
         <Animated.View style={[styles.container, isFirst && animatedCardSwipe]} {...rest}>
             <View style={styles.jobDetails}>
                 <View style={styles.companyDetails}>
-                    { job.CompanyImage !== "" && 
+                    { job.CompanyImage !== "" && job.CompanyImage &&
                         <Image style={styles.companyImage}
                             source={
                                 {uri: job.CompanyImage}
@@ -38,7 +37,24 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
                         style={styles.locationPin}
                         source={require('../../assets/pin.png')} 
                     />  
-                    <Text>{job.Location}</Text>
+                    <Text style={styles.locationText}>{job.Location}</Text>
+                </View>
+                
+                { job.Metadata !== "" && job.Metadata &&
+                    <View style={styles.metadata}>
+                        <Text style={styles.metadataText}>{job.Metadata}</Text>
+                    </View>
+                }
+                
+                <View style={styles.tagContainer}>
+                    {job.Tags.map((tag, i) => {
+                        return (
+                            <Tag 
+                                key={i}
+                                tag={tag}
+                            />
+                        );
+                    })}
                 </View>
             </View>
             
@@ -47,7 +63,6 @@ export default function Card({ job, isFirst, swipe, ...rest }) {
                 snapPoints={snapPoints}
                 enableOverDrag={false}
             >
-                
                 <View style={styles.bottomSheet}>
                     <Text style={styles.descriptionText}>Description</Text>
                 </View>
