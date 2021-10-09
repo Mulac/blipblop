@@ -23,8 +23,13 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:    
     
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2.3.1
+        with:
+          key: ${{ secrets.KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOST }} 
+
+
       - name: ssh-pipeline
-        run: |
-          echo ${{ secrets.KEY }} > ~/.ssh/id_rsa
-          ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd /blipblop && ./redeploy.sh"
+        run: ssh ${{ secrets.USERNAME }}@${{ secrets.HOST }} "cd /blipblop && ./redeploy.sh"
     
